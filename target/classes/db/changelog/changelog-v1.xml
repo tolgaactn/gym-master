@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="03" author="saecos">
+
+        <!-- Pre-Conditions (id(03))-->
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="nutrition"/>
+                <tableExists tableName="meal"/>
+                <tableExists tableName="meal_list"/>
+                <tableExists tableName="nutrition_type"/>
+                <tableExists tableName="user"/>
+                <tableExists tableName="user_info"/>
+            </not>
+        </preConditions>
+
+        <!-- CREATE TABLES -->
+        <createTable tableName="nutrition">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="kcal" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="protein" type="double">
+                <constraints nullable="false"  />
+            </column>
+            <column name="carbonhydrate" type="double">
+                <constraints nullable="false"  />
+            </column>
+            <column name="fat" type="double">
+                <constraints nullable="false"  />
+            </column>
+            <column name="base_weight" type="double">
+                <constraints nullable="false"  />
+            </column>
+            <column name="nutrition_type_id" type="int">
+                <constraints nullable="false"  />
+            </column>
+        </createTable>
+        <createTable tableName="meal">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="meal_list">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="nutrition_id" type="int">
+                <constraints nullable="false"  />
+            </column>
+            <column name="meal_id" type="int">
+                <constraints nullable="false"  />
+            </column>
+            <column name="weight" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="create_date" type="date">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="nutrition_type">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="nutrition_id" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(40)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone" type="varchar(13)">
+                <constraints nullable="false" />
+            </column>
+
+        </createTable>
+        <createTable tableName="user_info">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="lenght" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="weight" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="age" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_info" baseColumnNames="user_id"
+                                 constraintName="user_fk"
+                                 referencedTableName="user" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="nutrition" baseColumnNames="nutrition_type_id"
+                                 constraintName="nutrition_fk"
+                                 referencedTableName="nutrition_type" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="meal_list" baseColumnNames="meal_id"
+                                 constraintName="meal_list_fk"
+                                 referencedTableName="meal" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="meal_list" baseColumnNames="nutrition_id"
+                                 constraintName="meal_list_fk_2"
+                                 referencedTableName="nutrition" referencedColumnNames="id" />
+        <!-- ALTER TABLE (id(03)) -->
+
+    </changeSet>
+</databaseChangeLog>

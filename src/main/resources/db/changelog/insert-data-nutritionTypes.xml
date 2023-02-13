@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="03" author="tolga">
+        <insert tableName="nutritionTypes">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="kahvaltılık"/>
+            <column name="base_weight" valueNumeric="20"/>
+
+
+
+        </insert>
+
+    </changeSet>
+    </databaseChangeLog>
